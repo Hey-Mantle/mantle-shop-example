@@ -11,7 +11,7 @@ class MantleClient {
       method,
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
         "X-Mantle-App-Id": this.appId,
         "X-Mantle-Customer-Api-Token": this.customerApiToken,
       },

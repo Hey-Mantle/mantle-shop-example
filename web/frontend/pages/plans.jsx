@@ -29,7 +29,7 @@ export default function PlansPage() {
               plan={plan}
               currentSubscription={currentSubscription}
               onSubscribe={async (_plan) => {
-                const subscription = await subscribe(_plan.id, "/settings");
+                const subscription = await subscribe({ planId: _plan.id, returnUrl: "/settings" });
                 if (subscription.confirmationUrl) {
                   remoteRedirect(subscription.confirmationUrl, app);
                 } else {

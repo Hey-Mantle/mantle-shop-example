@@ -43,7 +43,7 @@ export const MantleProvider = ({ appId, customerApiToken, apiUrl, children }) =>
     plans,
     customer,
     isLoading,
-    subscribe: async (planId, returnUrl) => {
+    subscribe: async ({ planId, returnUrl }) => {
       const result = await mantleClient.subscribe({ planId, returnUrl });
       console.log(`[MantleProvider] subscribe result: `, result);
       return result;
@@ -53,13 +53,13 @@ export const MantleProvider = ({ appId, customerApiToken, apiUrl, children }) =>
       console.log(`[MantleProvider] cancel subscription result: `, result);
       return result;
     },
-    hasPlanFeature: (feature, compare=0) => {
+    hasPlanFeature: ({ feature, compare = 0 }) => {
       if (currentSubscription?.features[feature]) {
         return evaluateFeature(currentSubscription.features[feature], compare);
       }
       return false;
     },
-    planRequired: (feature) => {
+    planRequired: ({ feature }) => {
       return plans.sort((a, b) => a.amount - b.amount).find((plan) => evaluateFeature(plan.features[feature]));
     },
     refresh: async () => {
