@@ -1,17 +1,14 @@
-import { Card, EmptyState, Page } from "@shopify/polaris";
-import { useTranslation } from "react-i18next";
+import { Box, EmptyState, Page } from "@shopify/polaris";
 import { notFoundImage } from "../assets";
+import { Card } from "../components/layouts/Card";
 
 export default function NotFound() {
-  const { t } = useTranslation();
   return (
     <Page>
       <Card>
-        <Card.Section>
-          <EmptyState heading={t("NotFound.heading")} image={notFoundImage}>
-            <p>{t("NotFound.description")}</p>
-          </EmptyState>
-        </Card.Section>
+        <EmptyState heading="There is no page at this address" image={notFoundImage}>
+          <p>Check the URL and try again, or use the search bar to find what you need.</p>
+        </EmptyState>
       </Card>
     </Page>
   );
