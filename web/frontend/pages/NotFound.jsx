@@ -1,6 +1,6 @@
 import { Box, EmptyState, Page } from "@shopify/polaris";
 import { notFoundImage } from "../assets";
-import { Card } from "../components/layouts/Card";
+import { Card } from "../mantle/Card";
 
 export default function NotFound() {
   return (

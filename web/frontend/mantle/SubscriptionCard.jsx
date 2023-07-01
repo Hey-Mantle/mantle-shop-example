@@ -6,7 +6,7 @@ import {
   Text,
   VerticalStack,
 } from "@shopify/polaris";
-import { Card } from "../components/layouts/Card";
+import { Card } from "./Card";
 import { useMantle } from "./MantleProvider";
 
 export const SubscriptionCard = ({
