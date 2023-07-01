@@ -12,6 +12,7 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
+    "@prisma/client": "^4.16.2",
     "@shopify/app": "3.47.2",
     "@shopify/cli": "3.47.2"
   },
@@ -21,5 +22,8 @@
     "web",
     "web/frontend",
     "extensions/*"
-  ]
+  ],
+  "devDependencies": {
+    "prisma": "^4.16.2"
+  }
 }

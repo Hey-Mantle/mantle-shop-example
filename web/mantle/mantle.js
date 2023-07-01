@@ -1,5 +1,4 @@
 require("isomorphic-fetch");
-const { Shop } = require("../db/models");
 
 class Mantle {
   constructor({ appId, appApiKey, apiUrl = "https://api.heymantle.app/v1" }) {

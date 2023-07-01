@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -e
+
+if [ ! -f .env ]; then
+  echo ".env is missing, copy .env.example to start it."
+  exit
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Install Homebrew
+  which -s brew
+  if [[ $? != 0 ]] ; then
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  else
+    brew update
+  fi
+
+  # Install Postgres
+  if ! which psql; then
+    brew install postgresql
+  fi
+fi
+
+set -x
+
+# Install packages
+npm install
+
+# Start postgresql
+brew services stop postgresql@14
+brew services start postgresql@14
+
+# pg_ctl -D /opt/homebrew/var/postgresql -l logfile stop
+# pg_ctl -D /opt/homebrew/var/postgresql -l logfile start
+
+# Database
+
+# -- Initialize dev DB
+if psql -lqt | cut -d \| -f 1 | grep -qw mantledemo; then
+  echo "Dev database already exists."
+else
+  psql postgres -c "CREATE DATABASE mantledemo"
+  psql postgres -c "create user mantledemo with encrypted password 'mantledemo'"
+  psql postgres -c "grant all privileges on database mantledemo to mantledemo"
+  psql postgres -c "ALTER USER mantledemo CREATEDB"
+fi
+
+npx prisma migrate dev

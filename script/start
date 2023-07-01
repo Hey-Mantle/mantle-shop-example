@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+if [ ! -f .env ]; then
+  echo ".env is missing, copy .env.example to start it."
+  exit
+fi
+
+npx prisma generate
+npm run dev
