@@ -85,5 +85,15 @@ export const useMantle = () => {
     throw new Error('useMantle must be used within a MantleProvider');
   }
   
-  return context;
+  return {
+    currentSubscription: context.currentSubscription,
+    plans: context.plans,
+    customer: context.customer,
+    isLoading: context.isLoading,
+    subscribe: context.subscribe,
+    cancelSubscription: context.cancelSubscription,
+    hasPlanFeature: context.hasPlanFeature,
+    planRequired: context.planRequired,
+    refresh: context.refresh,
+  };
 }

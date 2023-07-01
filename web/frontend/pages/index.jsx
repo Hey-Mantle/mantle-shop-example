@@ -14,9 +14,15 @@ import { useTranslation, Trans } from "react-i18next";
 import { trophyImage } from "../assets";
 
 import { ProductsCard } from "../components";
+import { useMantle } from "../mantle/MantleProvider";
 
 export default function HomePage() {
+  const mantle = useMantle();
+
   const { t } = useTranslation();
+
+  console.log('plans: ', mantle.plans)
+
   return (
     <Page narrowWidth>
       <TitleBar title={t("HomePage.title")} primaryAction={null} />
