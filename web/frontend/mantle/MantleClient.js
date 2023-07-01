@@ -5,6 +5,7 @@ class MantleClient {
     this.apiUrl = apiUrl;
   }
 
+  // TODO: Use mantle.js instead of rewriting this for the frontend components
   async mantleRequest({ path, method = "GET", body }) {
     const response = await fetch(`${this.apiUrl}${path}`, {
       method,
@@ -14,9 +15,9 @@ class MantleClient {
         "X-Mantle-App-Id": this.appId,
         "X-Mantle-Customer-Api-Token": this.customerApiToken,
       },
-      ...body && {
+      ...(body && {
         body: JSON.stringify(body),
-      },
+      }),
     });
     const result = await response.json();
     return result;
