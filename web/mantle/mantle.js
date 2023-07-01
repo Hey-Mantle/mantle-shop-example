@@ -1,6 +1,4 @@
-require("isomorphic-fetch");
-
-class Mantle {
+export default class Mantle {
   constructor({ appId, appApiKey, apiUrl = "https://api.heymantle.app/v1" }) {
     this.appId = appId;
     this.appApiKey = appApiKey;
@@ -50,7 +48,6 @@ class Mantle {
         platform,
         platformId,
         ...(platform === "shopify" && { myshopifyDomain: platformId }),
-        myshopifyDomain,
         name,
         email,
         accessToken,
@@ -65,7 +62,3 @@ class Mantle {
     return result.customer;
   }
 }
-
-module.exports = {
-  Mantle,
-};
