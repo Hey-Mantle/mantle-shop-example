@@ -117,6 +117,16 @@ app.get("/api/products/count", async (_req, res) => {
   res.status(200).send(countData);
 });
 
+app.get("/api/shop", async (_req, res) => {
+  const session = res.locals.shopify.session;
+  const shop = await prisma.shop.findFirst({
+    where: {
+      myshopifyDomain: session.shop,
+    }
+  })
+  res.status(200).send(shop);
+});
+
 app.get("/api/products/create", async (_req, res) => {
   let status = 200;
   let error = null;
