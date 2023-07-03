@@ -4,10 +4,10 @@ import { CancelMinor, TickMinor } from "@shopify/polaris-icons";
 import { useState } from "react";
 import { money } from "./money";
 
-export const PlanCard = ({ plan, currentSubscription, onSubscribe }) => {
+export const PlanCard = ({ plan, subscription, onSubscribe }) => {
   const [loading, setLoading] = useState(false);
   const currentPlan =
-    currentSubscription?.plan?.id === plan.id || (plan.amount == 0 && !currentSubscription);
+    subscription?.plan?.id === plan.id || (plan.amount == 0 && !subscription);
 
   return (
     <Card key={plan.id}>

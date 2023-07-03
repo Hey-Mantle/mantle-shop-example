@@ -33,13 +33,13 @@ export const SubscriptionCard = ({
     disabled: false,
   },
 }) => {
-  const { currentSubscription } = useMantle();
+  const { subscription } = useMantle();
 
   return (
     <Card>
       <VerticalStack gap="4">
         <Text variant="headingMd">Current subscription</Text>
-        {!currentSubscription ? (
+        {!subscription ? (
           <HorizontalStack wrap={false} blockAlign="center">
             <Box width="80%">
               <Text>You are not currently subscribed to a plan.</Text>
@@ -57,7 +57,7 @@ export const SubscriptionCard = ({
           <HorizontalStack wrap={false}>
             <Box width="80%">
               <Text>
-                You are currently subscribed to the {currentSubscription?.plan?.name || "free"}{" "}
+                You are currently subscribed to the {subscription?.plan?.name || "free"}{" "}
                 plan.
               </Text>
             </Box>

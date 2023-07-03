@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Loading } from '@shopify/app-bridge-react';
-import MantleClient from './MantleClient';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { Loading } from "@shopify/app-bridge-react";
+import MantleClient from "./MantleClient";
 
 const MantleContext = createContext();
 
-export const MantleProvider = ({ appId, customerApiToken, apiUrl, children }) => {
+export const MantleProvider = ({ appId, customerApiToken, apiUrl, children, embedded = true }) => {
   const mantleClient = new MantleClient({ appId, customerApiToken, apiUrl });
 
   const [customer, setCustomer] = useState(null);
@@ -22,13 +22,13 @@ export const MantleProvider = ({ appId, customerApiToken, apiUrl, children }) =>
 
   useEffect(() => {
     fetchCurrentCustomer();
-  }, [appId, customerApiToken, apiUrl]);
+  }, []);
 
   const evaluateFeature = (feature, compare = 0) => {
     if (feature) {
-      if (feature.type === 'boolean') {
+      if (feature.type === "boolean") {
         return feature.value;
-      } else if (feature.type === 'limit') {
+      } else if (feature.type === "limit") {
         return compare < feature.value;
       }
     }
@@ -36,12 +36,12 @@ export const MantleProvider = ({ appId, customerApiToken, apiUrl, children }) =>
   };
 
   const plans = customer?.plans || [];
-  const currentSubscription = customer?.subscription;
+  const subscription = customer?.subscription;
 
   const ctx = {
-    currentSubscription,
-    plans,
     customer,
+    subscription,
+    plans,
     isLoading,
     subscribe: async ({ planId, returnUrl }) => {
       const result = await mantleClient.subscribe({ planId, returnUrl });
@@ -53,47 +53,45 @@ export const MantleProvider = ({ appId, customerApiToken, apiUrl, children }) =>
       console.log(`[MantleProvider] cancel subscription result: `, result);
       return result;
     },
-    hasPlanFeature: ({ feature, compare = 0 }) => {
-      if (currentSubscription?.features[feature]) {
-        return evaluateFeature(currentSubscription.features[feature], compare);
+    hasFeature: ({ feature, compare = 0 }) => {
+      if (subscription?.features[feature]) {
+        return evaluateFeature(subscription.features[feature], compare);
       }
       return false;
     },
-    planRequired: ({ feature }) => {
-      return plans.sort((a, b) => a.amount - b.amount).find((plan) => evaluateFeature(plan.features[feature]));
+    requiredPlan: ({ feature }) => {
+      return plans
+        .sort((a, b) => a.amount - b.amount)
+        .find((plan) => evaluateFeature(plan.features[feature]));
     },
-    refresh: async () => {
+    refetch: async () => {
       await fetchCurrentCustomer();
     },
   };
 
-  if (isLoading) {
+  if (isLoading && embedded) {
     return <Loading />;
   }
 
-  return (
-    <MantleContext.Provider value={ctx}>
-      {children}
-    </MantleContext.Provider>
-  );
-}
+  return <MantleContext.Provider value={ctx}>{children}</MantleContext.Provider>;
+};
 
 export const useMantle = () => {
   const context = useContext(MantleContext);
-  
+
   if (context === undefined) {
-    throw new Error('useMantle must be used within a MantleProvider');
+    throw new Error("useMantle must be used within a MantleProvider");
   }
-  
+
   return {
-    currentSubscription: context.currentSubscription,
+    subscription: context.subscription,
     plans: context.plans,
     customer: context.customer,
     isLoading: context.isLoading,
     subscribe: context.subscribe,
     cancelSubscription: context.cancelSubscription,
-    hasPlanFeature: context.hasPlanFeature,
-    planRequired: context.planRequired,
-    refresh: context.refresh,
+    hasFeature: context.hasFeature,
+    requiredPlan: context.requiredPlan,
+    refetch: context.refetch,
   };
-}
+};
