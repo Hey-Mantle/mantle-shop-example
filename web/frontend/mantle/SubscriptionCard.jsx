@@ -2,6 +2,7 @@ import { Box, Button, HorizontalStack, Text, VerticalStack } from "@shopify/pola
 import { useMantle } from "./MantleProvider";
 import { money } from "./money";
 import { PlanFeatureListItem } from "./PlanFeatureListItem";
+import { featureSort } from "./utils";
 
 const intervalString = (interval) => {
   switch (interval) {
@@ -71,9 +72,11 @@ export const SubscriptionCard = ({
               <VerticalStack gap="2">
                 <Text>Your plan includes:</Text>
                 <VerticalStack gap="2">
-                  {Object.values(subscription.features).map((feature) => (
-                    <PlanFeatureListItem key={feature.id} feature={feature} />
-                  ))}
+                  {Object.values(subscription.features)
+                    .sort(featureSort)
+                    .map((feature) => (
+                      <PlanFeatureListItem key={feature.id} feature={feature} />
+                    ))}
                 </VerticalStack>
               </VerticalStack>
             )}

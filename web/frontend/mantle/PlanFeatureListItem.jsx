@@ -1,22 +1,20 @@
 import { Box, HorizontalStack, Icon, Text } from "@shopify/polaris";
 import { CircleCancelMinor, CircleTickMinor } from "@shopify/polaris-icons";
+import { featureEnabled } from "./utils";
 
-export const PlanFeatureListItem = ({ feature }) => {
-  const enabled = (feature.type === "boolean" && feature.value == true) || feature.type === "limit";
-  return (
+export const PlanFeatureListItem = ({ feature }) => (
     <HorizontalStack gap="2" align="start" wrap={false}>
       <Icon
-        source={enabled ? CircleTickMinor : CircleCancelMinor}
-        color={enabled ? "success" : "subdued"}
+        source={featureEnabled(feature) ? CircleTickMinor : CircleCancelMinor}
+        color={featureEnabled(feature) ? "success" : "subdued"}
       />
       <Box width="100%">
         <Text>
           {feature.name}
           {feature.type === "limit"
-            ? `: ${feature.value > 0 ? "unlimited" : `up to ${feature.value}`}`
+            ? `: ${feature.value < 0 ? "unlimited" : `up to ${feature.value}`}`
             : ""}
         </Text>
       </Box>
     </HorizontalStack>
   );
-};

@@ -2,6 +2,7 @@ import { Box, Button, Text, VerticalStack } from "@shopify/polaris";
 import { useState } from "react";
 import { money } from "./money";
 import { PlanFeatureListItem } from "./PlanFeatureListItem";
+import { featureSort } from "./utils";
 
 export const PlanCard = ({ plan, subscription, onSubscribe }) => {
   const [loading, setLoading] = useState(false);
@@ -17,9 +18,11 @@ export const PlanCard = ({ plan, subscription, onSubscribe }) => {
           </Text>
         </VerticalStack>
         <VerticalStack gap="1">
-          {Object.values(plan.features).map((feature) => (
-            <PlanFeatureListItem key={feature.id} feature={feature} />
-          ))}
+          {Object.values(plan.features)
+            .sort(featureSort)
+            .map((feature) => (
+              <PlanFeatureListItem key={feature.id} feature={feature} />
+            ))}
         </VerticalStack>
         <Button
           primary
