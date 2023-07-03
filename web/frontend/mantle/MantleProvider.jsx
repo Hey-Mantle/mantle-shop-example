@@ -62,8 +62,8 @@ export const MantleProvider = ({
       return result;
     },
     hasFeature: ({ feature, compare = 0 }) => {
-      if (subscription?.features[feature]) {
-        return evaluateFeature(subscription.features[feature], compare);
+      if (currentPlan?.features[feature]) {
+        return evaluateFeature(currentPlan.features[feature], compare);
       }
       return false;
     },
