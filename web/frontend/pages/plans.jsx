@@ -1,6 +1,5 @@
-import { HorizontalGrid, Page } from "@shopify/polaris";
+import { Box, HorizontalGrid, Page } from "@shopify/polaris";
 import { useMantle } from "../mantle/MantleProvider";
-import { Card } from "../mantle/Card";
 import { PlanCard } from "../mantle/PlanCard";
 import { useContext } from "react";
 import { Context } from "@shopify/app-bridge-react";
@@ -18,9 +17,9 @@ export default function PlansPage() {
   return (
     <Page title="Plans">
       {plans.length === 0 && (
-        <Card>
+        <Box padding="5" background="bg" borderRadius="2" shadow="sm">
           <p>There are no plans available.</p>
-        </Card>
+        </Box>
       )}
       {plans.length > 0 && (
         <HorizontalGrid columns={{ sm: 1, md: plans.length }} gap="4">

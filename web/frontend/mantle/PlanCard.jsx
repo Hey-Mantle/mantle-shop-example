@@ -1,15 +1,14 @@
-import { Box, Button, HorizontalStack, Icon, Text, VerticalStack } from "@shopify/polaris";
-import { Card } from "./Card";
-import { CancelMinor, TickMinor } from "@shopify/polaris-icons";
+import { Box, Button, Text, VerticalStack } from "@shopify/polaris";
 import { useState } from "react";
 import { money } from "./money";
+import { PlanFeatureListItem } from "./PlanFeatureListItem";
 
 export const PlanCard = ({ plan, subscription, onSubscribe }) => {
   const [loading, setLoading] = useState(false);
   const currentPlan = subscription?.plan?.id === plan.id || (plan.amount == 0 && !subscription);
 
   return (
-    <Card key={plan.id}>
+    <Box padding="5" background="bg" borderRadius="2" shadow="sm">
       <VerticalStack gap="4">
         <VerticalStack gap="1">
           <Text variant="headingMd">{plan.name}</Text>
@@ -19,17 +18,7 @@ export const PlanCard = ({ plan, subscription, onSubscribe }) => {
         </VerticalStack>
         <VerticalStack gap="1">
           {Object.values(plan.features).map((feature) => (
-            <HorizontalStack wrap={false} key={feature.id} gap="1">
-              {feature.type === "boolean" && (
-                <Icon
-                  source={feature.value === true ? TickMinor : CancelMinor}
-                  color={feature.value === true ? "success" : "critical"}
-                />
-              )}
-              <Box width="100%">
-                <Text>{feature.name}</Text>
-              </Box>
-            </HorizontalStack>
+            <PlanFeatureListItem key={feature.id} feature={feature} />
           ))}
         </VerticalStack>
         <Button
@@ -45,6 +34,6 @@ export const PlanCard = ({ plan, subscription, onSubscribe }) => {
           {currentPlan ? "Current plan" : "Select plan"}
         </Button>
       </VerticalStack>
-    </Card>
+    </Box>
   );
 };
