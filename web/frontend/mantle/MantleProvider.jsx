@@ -30,14 +30,13 @@ export const MantleProvider = ({
     fetchCurrentCustomer();
   }, []);
 
-  const evaluateFeature = (feature, compare = 0) => {
-    if (feature) {
-      if (feature.type === "boolean") {
-        return feature.value;
-      } else if (feature.type === "limit") {
-        return compare < feature.value || feature.value === -1;
-      }
+  const evaluateFeature = (feature, count = 0) => {
+    if (feature?.type === "boolean") {
+      return feature.value;
+    } else if (feature?.type === "limit") {
+      return count < feature.value || feature.value === -1;
     }
+
     return false;
   };
 
@@ -61,16 +60,22 @@ export const MantleProvider = ({
       console.log(`[MantleProvider] cancel subscription result: `, result);
       return result;
     },
-    hasFeature: ({ feature, compare = 0 }) => {
+    hasFeature: ({ feature, count = 0 }) => {
       if (currentPlan?.features[feature]) {
-        return evaluateFeature(currentPlan.features[feature], compare);
+        return evaluateFeature(currentPlan.features[feature], count);
       }
       return false;
     },
-    requiredPlan: ({ feature }) => {
+    featureLimit: ({ feature }) => {
+      if (currentPlan?.features[feature] && currentPlan.features[feature].type === "limit") {
+        return currentPlan.features[feature].value;
+      }
+      return 0;
+    },
+    requiredPlan: ({ feature, count = 0 }) => {
       return plans
         .sort((a, b) => a.amount - b.amount)
-        .find((plan) => evaluateFeature(plan.features[feature]));
+        .find((plan) => evaluateFeature(plan.features[feature], count));
     },
     refetch: async () => {
       await fetchCurrentCustomer();
@@ -100,6 +105,7 @@ export const useMantle = () => {
     subscribe: context.subscribe,
     cancelSubscription: context.cancelSubscription,
     hasFeature: context.hasFeature,
+    featureLimit: context.featureLimit,
     requiredPlan: context.requiredPlan,
     refetch: context.refetch,
   };

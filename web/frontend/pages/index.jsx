@@ -4,39 +4,33 @@ import { useMantle } from "../mantle/MantleProvider";
 import { useAppQuery } from "../hooks";
 import { money } from "../mantle/money";
 import { useNavigate } from "@shopify/app-bridge-react";
+import { PlanUpgradeBanner } from "../mantle/PlanUpgradeBanner";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { currentPlan, hasFeature } = useMantle();
+  const { currentPlan, featureLimit } = useMantle();
 
   const { data, isLoading } = useAppQuery({
     url: "/api/products",
   });
 
-  const limitProducts =
-    !isLoading && !hasFeature({ feature: "product_count", compare: data?.products.length });
-  const products = data?.products?.slice(0, currentPlan?.features?.product_count?.value) || [];
+  const maxProducts = featureLimit({ feature: "product_count" });
+  const products = data?.products?.slice(0, maxProducts) || [];
 
   return (
     <Page narrowWidth title="Your products">
       <VerticalStack gap="4">
-        {limitProducts && (
-          <Banner
-            status="warning"
-            title="Upgrade required"
-            action={{
-              content: "Upgrade plan",
-              onAction: () => {
-                navigate("/plans");
-              },
-            }}
-          >
-            <Text>
-              You have reached the limit of {currentPlan?.features?.product_count?.value} products
-              for your current plan. Please upgrade to continue.
-            </Text>
-          </Banner>
-        )}
+        <PlanUpgradeBanner
+          currentPlan={currentPlan}
+          featureKey="product_count"
+          count={data?.products?.length}
+          action={{
+            content: "Upgrade plan",
+            onAction: () => {
+              navigate("/plans");
+            },
+          }}
+        />
         <Box padding="0" background="bg" borderRadius="2" shadow="sm">
           <IndexTable
             resourceName={{ singular: "product", plural: "products" }}
