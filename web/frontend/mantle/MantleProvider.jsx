@@ -43,10 +43,12 @@ export const MantleProvider = ({
 
   const plans = customer?.plans || [];
   const subscription = customer?.subscription;
+  const currentPlan = subscription?.plan || plans.find((plan) => plan.amount === 0 && plan.public);
 
   const ctx = {
     customer,
     subscription,
+    currentPlan,
     plans,
     isLoading,
     subscribe: async ({ planId, returnUrl }) => {
@@ -91,6 +93,7 @@ export const useMantle = () => {
 
   return {
     subscription: context.subscription,
+    currentPlan: context.currentPlan,
     plans: context.plans,
     customer: context.customer,
     isLoading: context.isLoading,

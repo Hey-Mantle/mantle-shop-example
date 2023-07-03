@@ -12,7 +12,7 @@ const remoteRedirect = (url, app) => {
 
 export default function PlansPage() {
   const app = useContext(Context);
-  const { plans, subscription, subscribe, refetch } = useMantle();
+  const { plans, currentPlan, subscribe, refetch } = useMantle();
 
   return (
     <Page title="Plans">
@@ -26,7 +26,7 @@ export default function PlansPage() {
           {plans.map((plan) => (
             <PlanCard
               plan={plan}
-              subscription={subscription}
+              currentPlan={currentPlan}
               onSubscribe={async (_plan) => {
                 const subscription = await subscribe({ planId: _plan.id, returnUrl: "/settings" });
                 if (subscription.confirmationUrl) {

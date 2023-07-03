@@ -4,9 +4,9 @@ import { money } from "./money";
 import { PlanFeatureListItem } from "./PlanFeatureListItem";
 import { featureSort } from "./utils";
 
-export const PlanCard = ({ plan, subscription, onSubscribe }) => {
+export const PlanCard = ({ plan, currentPlan, onSubscribe }) => {
   const [loading, setLoading] = useState(false);
-  const currentPlan = subscription?.plan?.id === plan.id || (plan.amount == 0 && !subscription);
+  const isCurrentPlan = currentPlan.id === plan.id;
 
   return (
     <Box padding="5" background="bg" borderRadius="2" shadow="sm">
@@ -27,14 +27,14 @@ export const PlanCard = ({ plan, subscription, onSubscribe }) => {
         <Button
           primary
           loading={loading}
-          disabled={currentPlan}
+          disabled={isCurrentPlan}
           onClick={async () => {
             setLoading(true);
             await onSubscribe(plan);
             setLoading(false);
           }}
         >
-          {currentPlan ? "Current plan" : "Select plan"}
+          {isCurrentPlan ? "Current plan" : "Select plan"}
         </Button>
       </VerticalStack>
     </Box>

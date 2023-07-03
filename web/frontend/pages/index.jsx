@@ -5,9 +5,9 @@ import { useAppQuery } from "../hooks";
 import { money } from "../mantle/money";
 
 export default function HomePage() {
-  const mantle = useMantle();
+  const { currentPlan } = useMantle();
 
-  const { data, refetch, isLoading, isRefetching } = useAppQuery({
+  const { data, isLoading } = useAppQuery({
     url: "/api/products",
   });
 
