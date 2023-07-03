@@ -49,6 +49,14 @@ app.get("/api/products/count", async (_req, res) => {
   res.status(200).send(countData);
 });
 
+app.get("/api/products", async (_req, res) => {
+  const products = await shopify.api.rest.Product.all({
+    session: res.locals.shopify.session,
+    limit: 20,
+  });
+  res.status(200).send({ products: products.data });
+});
+
 app.get("/api/shop", async (_req, res) => {
   const session = res.locals.shopify.session;
   const shop = await prisma.shop.findFirst({
