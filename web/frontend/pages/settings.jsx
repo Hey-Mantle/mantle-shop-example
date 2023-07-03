@@ -54,15 +54,17 @@ export default function SettingsPage() {
               await refetch();
               setIsCancelling(false);
               setShowCancelModal(false);
-            }
+            },
           }}
-          secondaryActions={[{
-            content: "Keep subscription",
-            onAction: () => setShowCancelModal(false),
-            disabled: isCancelling || isLoading,
-          }]}
+          secondaryActions={[
+            {
+              content: "Keep subscription",
+              onAction: () => setShowCancelModal(false),
+              disabled: isCancelling || isLoading,
+            },
+          ]}
         >
-          <Text>You will be able to resubscribe again if you change your mind.</Text>
+          <Text>You will be able to subscribe again if you change your mind.</Text>
         </Modal>
       )}
     </>

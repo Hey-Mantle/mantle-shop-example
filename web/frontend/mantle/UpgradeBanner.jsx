@@ -1,6 +1,6 @@
 import { Banner } from "@shopify/polaris";
 
-export const PlanUpgradeBanner = ({
+export const UpgradeBanner = ({
   currentPlan,
   featureKey,
   count,
@@ -26,7 +26,9 @@ export const PlanUpgradeBanner = ({
         ? `You have reached the limit of ${planFeature?.value} ${(
             noun || planFeature?.name
           ).toLowerCase()}s for your current plan. Please upgrade to continue.`
-        : `Your current plan does not support the ${planFeature?.name.toLowerCase()} feature. Please upgrade to continue.`}
+        : `Your current plan does not support the ${(
+            noun || planFeature?.name
+          ).toLowerCase()} feature. Please upgrade to continue.`}
     </Banner>
   );
 };
