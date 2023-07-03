@@ -70,7 +70,7 @@ export const MantleProvider = ({
       if (currentPlan?.features[feature] && currentPlan.features[feature].type === "limit") {
         return currentPlan.features[feature].value;
       }
-      return 0;
+      return -1;
     },
     requiredPlan: ({ feature, count = 0 }) => {
       return plans

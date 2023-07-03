@@ -8,6 +8,8 @@ export const PlanUpgradeBanner = ({
     content: "Upgrade plan",
     onAction: () => {},
   },
+  title = "Upgrade required",
+  noun,
 }) => {
   const planFeature = currentPlan?.features?.[featureKey];
   const upgradeRequired =
@@ -19,9 +21,12 @@ export const PlanUpgradeBanner = ({
   }
 
   return (
-    <Banner title="Upgrade required" status="warning" action={action}>
-      You have reached the limit of {planFeature?.value} for your current plan. Please upgrade to
-      continue.
+    <Banner title={title} status="warning" action={action}>
+      {planFeature.type === "limit"
+        ? `You have reached the limit of ${planFeature?.value} ${(
+            noun || planFeature?.name
+          ).toLowerCase()}s for your current plan. Please upgrade to continue.`
+        : `Your current plan does not support the ${planFeature?.name.toLowerCase()} feature. Please upgrade to continue.`}
     </Banner>
   );
 };
