@@ -35,7 +35,7 @@ export const MantleProvider = ({
       if (feature.type === "boolean") {
         return feature.value;
       } else if (feature.type === "limit") {
-        return compare < feature.value;
+        return compare < feature.value || feature.value === -1;
       }
     }
     return false;
