@@ -5,13 +5,12 @@ class MantleClient {
     this.apiUrl = apiUrl;
   }
 
-  // TODO: Use mantle.js instead of rewriting this for the frontend components
   async mantleRequest({ path, method = "GET", body }) {
     const response = await fetch(`${this.apiUrl}${path}`, {
       method,
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
         "X-Mantle-App-Id": this.appId,
         "X-Mantle-Customer-Api-Token": this.customerApiToken,
       },
@@ -24,25 +23,19 @@ class MantleClient {
   }
 
   async getCustomer() {
-    console.log(`[MantleApiClient] getCustomer`);
-    const result = await this.mantleRequest({ path: "/customer" });
-    return result.customer;
+    return (await this.mantleRequest({ path: "/customer" })).customer;
   }
 
   async subscribe({ planId, returnUrl }) {
-    console.log(`[MantleApiClient] subscribe: `, { planId, returnUrl });
-    const result = await this.mantleRequest({
+    return await this.mantleRequest({
       path: "/subscriptions",
       method: "POST",
       body: { planId, returnUrl },
     });
-    return result;
   }
 
   async cancelSubscription() {
-    console.log(`[MantleApiClient] cancel subscription`);
-    const result = await this.mantleRequest({ path: "/subscriptions", method: "DELETE" });
-    return result;
+    return await this.mantleRequest({ path: "/subscriptions", method: "DELETE" });
   }
 }
 

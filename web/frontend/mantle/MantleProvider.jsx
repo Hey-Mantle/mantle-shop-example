@@ -4,7 +4,13 @@ import MantleClient from "./MantleClient";
 
 const MantleContext = createContext();
 
-export const MantleProvider = ({ appId, customerApiToken, apiUrl, children, embedded = true }) => {
+export const MantleProvider = ({
+  appId,
+  customerApiToken,
+  apiUrl = "https://api.heymantle.app/v1",
+  embedded = true,
+  children,
+}) => {
   const mantleClient = new MantleClient({ appId, customerApiToken, apiUrl });
 
   const [customer, setCustomer] = useState(null);

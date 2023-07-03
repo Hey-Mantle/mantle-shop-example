@@ -8,6 +8,16 @@ import {
 } from "@shopify/polaris";
 import { Card } from "./Card";
 import { useMantle } from "./MantleProvider";
+import { money } from "./money";
+
+const intervalString = (interval) => {
+  switch (interval) {
+    case "EVERY_30_DAYS":
+      return "every 30 days";
+    default:
+      return "every year";
+  }
+};
 
 export const SubscriptionCard = ({
   subscribeAction = {
@@ -19,7 +29,7 @@ export const SubscriptionCard = ({
   },
   changePlanAction = {
     content: "Change plan",
-    primary: false,
+    primary: true,
     onAction: () => {},
     loading: false,
     disabled: false,
@@ -39,11 +49,10 @@ export const SubscriptionCard = ({
     <Card>
       <VerticalStack gap="4">
         <Text variant="headingMd">Current subscription</Text>
+        
         {!subscription ? (
-          <HorizontalStack wrap={false} blockAlign="center">
-            <Box width="80%">
-              <Text>You are not currently subscribed to a plan.</Text>
-            </Box>
+          <HorizontalStack wrap={false} blockAlign="center" align="space-between">
+            <Text>You are not currently subscribed to a plan.</Text>
             <Button
               primary={subscribeAction.primary}
               onClick={subscribeAction.onAction}
@@ -54,14 +63,26 @@ export const SubscriptionCard = ({
             </Button>
           </HorizontalStack>
         ) : (
-          <HorizontalStack wrap={false}>
-            <Box width="80%">
-              <Text>
-                You are currently subscribed to the {subscription?.plan?.name || "free"}{" "}
-                plan.
-              </Text>
-            </Box>
-            <HorizontalGrid columns="2" gap="2" alignItems="end">
+          <VerticalStack gap="4">
+            <Text>
+              You are currently subscribed to the {subscription.plan.name || "free"} plan for{" "}
+              {money({
+                amount: subscription.plan.amount,
+                currency: subscription.plan.currencyCode,
+              })}{" "}
+              {intervalString(subscription.plan.interval)}.
+            </Text>
+
+            <HorizontalStack align="end" gap="2">
+              <Button
+                primary={cancelAction.primary}
+                destructive={cancelAction.destructive}
+                onClick={cancelAction.onAction}
+                disabled={cancelAction.disabled}
+                loading={cancelAction.loading}
+              >
+                {cancelAction.content}
+              </Button>
               <Button
                 primary={changePlanAction.primary}
                 onClick={changePlanAction.onAction}
@@ -70,18 +91,8 @@ export const SubscriptionCard = ({
               >
                 {changePlanAction.content}
               </Button>
-              <Button
-                primary={cancelAction.primary}
-                destructive={cancelAction.destructive}
-                onClick={cancelAction.onAction}
-                disabled={cancelAction.disabled}
-                loading={cancelAction.loading}
-                outline
-              >
-                {cancelAction.content}
-              </Button>
-            </HorizontalGrid>
-          </HorizontalStack>
+            </HorizontalStack>
+          </VerticalStack>
         )}
       </VerticalStack>
     </Card>

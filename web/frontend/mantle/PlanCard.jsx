@@ -6,15 +6,16 @@ import { money } from "./money";
 
 export const PlanCard = ({ plan, subscription, onSubscribe }) => {
   const [loading, setLoading] = useState(false);
-  const currentPlan =
-    subscription?.plan?.id === plan.id || (plan.amount == 0 && !subscription);
+  const currentPlan = subscription?.plan?.id === plan.id || (plan.amount == 0 && !subscription);
 
   return (
     <Card key={plan.id}>
       <VerticalStack gap="4">
         <VerticalStack gap="1">
           <Text variant="headingMd">{plan.name}</Text>
-          <Text variant="headingXl">{money(plan.amount)}</Text>
+          <Text variant="headingXl">
+            {money({ amount: plan.amount, currency: plan.currencyCode })}
+          </Text>
         </VerticalStack>
         <VerticalStack gap="1">
           {Object.values(plan.features).map((feature) => (
