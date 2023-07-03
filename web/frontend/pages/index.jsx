@@ -13,22 +13,27 @@ export default function HomePage() {
     url: "/api/products",
   });
 
-  const limitProducts = !isLoading && !hasFeature({ feature: "product_count", compare: data?.products.length });
+  const limitProducts =
+    !isLoading && !hasFeature({ feature: "product_count", compare: data?.products.length });
   const products = data?.products?.slice(0, currentPlan?.features?.product_count?.value) || [];
 
   return (
     <Page narrowWidth title="Your products">
       <VerticalStack gap="4">
         {limitProducts && (
-          <Banner status="warning" title="Upgrade required" action={{
-            content: "Upgrade plan",
-            onAction: () => {
-              navigate("/plans");
-            }
-          }}>
+          <Banner
+            status="warning"
+            title="Upgrade required"
+            action={{
+              content: "Upgrade plan",
+              onAction: () => {
+                navigate("/plans");
+              },
+            }}
+          >
             <Text>
-              You have reached the limit of {currentPlan?.features?.product_count?.value} products for
-              your current plan. Please upgrade your plan to continue.
+              You have reached the limit of {currentPlan?.features?.product_count?.value} products
+              for your current plan. Please upgrade to continue.
             </Text>
           </Banner>
         )}
@@ -44,7 +49,7 @@ export default function HomePage() {
               { title: "Price" },
             ]}
           >
-            {products.map(product => (
+            {products.map((product) => (
               <IndexTable.Row key={product.id} id={product.id} selected={false}>
                 <IndexTable.Cell>
                   {product.image?.src && (
