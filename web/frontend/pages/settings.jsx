@@ -7,13 +7,14 @@ import { useState } from "react";
 export default function SettingsPage() {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
-  const { cancelSubscription, refetch, isLoading } = useMantle();
+  const { cancelSubscription, refetch, isLoading, subscription } = useMantle();
   const navigate = useNavigate();
 
   return (
     <>
       <Page title="Settings" narrowWidth>
         <SubscriptionCard
+          subscription={subscription}
           subscribeAction={{
             content: "Select plan",
             primary: true,
