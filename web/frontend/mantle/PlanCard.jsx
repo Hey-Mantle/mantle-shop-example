@@ -1,6 +1,6 @@
 import { Box, Button, Text, VerticalStack } from "@shopify/polaris";
 import { useState } from "react";
-import { money } from "./money";
+import { money } from "./utils";
 import { PlanFeatureListItem } from "./PlanFeatureListItem";
 import { featureSort } from "./utils";
 

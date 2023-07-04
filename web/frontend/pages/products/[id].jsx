@@ -17,12 +17,13 @@ import {
 
 import { useMantle } from "../../mantle/MantleProvider";
 import { useAppQuery } from "../../hooks";
-import { Loading } from "@shopify/app-bridge-react";
+import { Loading, useNavigate } from "@shopify/app-bridge-react";
 import { useParams } from "react-router-dom";
 import { UpgradeBanner } from "../../mantle/UpgradeBanner";
 
 export default function ProductPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { currentPlan, hasFeature } = useMantle();
 

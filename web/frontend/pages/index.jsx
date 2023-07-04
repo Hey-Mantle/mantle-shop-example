@@ -2,7 +2,7 @@ import { Box, IndexTable, Modal, Page, Text, VerticalStack } from "@shopify/pola
 
 import { useMantle } from "../mantle/MantleProvider";
 import { useAppQuery } from "../hooks";
-import { money } from "../mantle/money";
+import { money } from "../mantle/utils";
 import { useNavigate } from "@shopify/app-bridge-react";
 import { UpgradeBanner } from "../mantle/UpgradeBanner";
 import { useState } from "react";
