@@ -57,7 +57,7 @@ export const SubscriptionCard = ({
         </HorizontalStack>
       ) : (
         <VerticalStack gap="4">
-          <HorizontalStack wrap={false} align="space-between">
+          <HorizontalStack wrap={false} align="space-between" blockAlign="start">
             <PlanCardHeader plan={subscription.plan} hasUsageCharges showTrialBadge={false} />
 
             <Box width="50%">
