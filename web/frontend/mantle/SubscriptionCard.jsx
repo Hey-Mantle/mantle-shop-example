@@ -1,8 +1,9 @@
-import { Box, Button, HorizontalStack, Text, VerticalStack } from "@shopify/polaris";
+import { Box, Button, Divider, HorizontalStack, Text, VerticalStack } from "@shopify/polaris";
 import { useMantle } from "./MantleProvider";
 import { money } from "./utils";
 import { PlanFeatureListItem } from "./PlanFeatureListItem";
 import { featureSort } from "./utils";
+import { PlanCardHeader } from "./PlanCard";
 
 const intervalString = (interval) => {
   switch (interval) {
@@ -41,7 +42,7 @@ export const SubscriptionCard = ({
   <Box padding="5" background="bg" borderRadius="2" shadow="sm">
     <VerticalStack gap="4">
       <Text variant="headingMd">Current subscription</Text>
-
+      <Divider />
       {!subscription ? (
         <HorizontalStack wrap={false} blockAlign="center" align="space-between">
           <Text>You are not currently subscribed to a plan.</Text>
@@ -56,28 +57,21 @@ export const SubscriptionCard = ({
         </HorizontalStack>
       ) : (
         <VerticalStack gap="4">
-          <Text>
-            You are currently subscribed to the {subscription.plan.name || "free"} plan. You will be
-            charged{" "}
-            {money({
-              amount: subscription.plan.amount,
-              currency: subscription.plan.currencyCode,
-            })}{" "}
-            {intervalString(subscription.plan.interval)}.
-          </Text>
+          <HorizontalStack wrap={false} align="space-between">
+            <PlanCardHeader plan={subscription.plan} hasUsageCharges showTrialBadge={false} />
 
-          {Object.keys(subscription.features).length > 0 && (
-            <VerticalStack gap="2">
-              <Text>Your plan includes:</Text>
-              <VerticalStack gap="2">
-                {Object.values(subscription.features)
-                  .sort(featureSort)
-                  .map((feature) => (
-                    <PlanFeatureListItem key={feature.id} feature={feature} />
-                  ))}
-              </VerticalStack>
-            </VerticalStack>
-          )}
+            <Box width="50%">
+              {Object.keys(subscription.features).length > 0 && (
+                <VerticalStack gap="2">
+                  {Object.values(subscription.features)
+                    .sort(featureSort)
+                    .map((feature) => (
+                      <PlanFeatureListItem key={feature.id} feature={feature} />
+                    ))}
+                </VerticalStack>
+              )}
+            </Box>
+          </HorizontalStack>
 
           <HorizontalStack align="end" gap="2">
             <Button

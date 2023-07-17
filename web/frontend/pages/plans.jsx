@@ -2,7 +2,7 @@ import { Box, HorizontalGrid, Page } from "@shopify/polaris";
 import { useMantle } from "../mantle/MantleProvider";
 import { PlanCard } from "../mantle/PlanCard";
 import { useContext } from "react";
-import { Context } from "@shopify/app-bridge-react";
+import { Context, useNavigate } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
 
 const remoteRedirect = (url, app) => {
@@ -12,11 +12,17 @@ const remoteRedirect = (url, app) => {
 
 export default function PlansPage() {
   const app = useContext(Context);
+  const navigate = useNavigate();
   const { plans, currentPlan, subscribe, refetch } = useMantle();
   const hasUsageCharges = plans.some((plan) => Object.keys(plan.usageCharges).length > 0);
 
   return (
-    <Page title="Plans">
+    <Page title="Plans" backAction={{
+      content: "Back",
+      onAction: () => {
+        navigate("/settings");
+      }
+    }}>
       {plans.length === 0 && (
         <Box padding="5" background="bg" borderRadius="2" shadow="sm">
           <p>There are no plans available.</p>

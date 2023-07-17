@@ -33,3 +33,23 @@ export const moneyWithoutCents = ({ amount = 0, currency = "USD" }) => {
 export const largeMoney = ({ amount = 0, currency = "USD" }) => {
   return largeMoneyFormatter(currency).format(amount);
 };
+
+export const intervalLabel = (interval) => {
+  switch (interval) {
+    case "ANNUAL":
+      return "yearly";
+    case "EVERY_30_DAYS":
+    default:
+      return "monthly";
+  }
+};
+
+export const intervalLabelShort = (interval) => {
+  switch (interval) {
+    case "ANNUAL":
+      return "yr";
+    case "EVERY_30_DAYS":
+    default:
+      return "mo";
+  }
+};
