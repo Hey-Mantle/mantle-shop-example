@@ -1,18 +1,7 @@
 import { Box, Button, Divider, HorizontalStack, Text, VerticalStack } from "@shopify/polaris";
-import { useMantle } from "./MantleProvider";
-import { money } from "./utils";
 import { PlanFeatureListItem } from "./PlanFeatureListItem";
 import { featureSort } from "./utils";
 import { PlanCardHeader } from "./PlanCard";
-
-const intervalString = (interval) => {
-  switch (interval) {
-    case "EVERY_30_DAYS":
-      return "every 30 days";
-    default:
-      return "every year";
-  }
-};
 
 export const SubscriptionCard = ({
   subscription,
