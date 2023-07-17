@@ -13,6 +13,7 @@ const remoteRedirect = (url, app) => {
 export default function PlansPage() {
   const app = useContext(Context);
   const { plans, currentPlan, subscribe, refetch } = useMantle();
+  const hasUsageCharges = plans.some((plan) => Object.keys(plan.usageCharges).length > 0);
 
   return (
     <Page title="Plans">
@@ -25,6 +26,8 @@ export default function PlansPage() {
         <HorizontalGrid columns={{ sm: 1, md: plans.length }} gap="4">
           {plans.map((plan) => (
             <PlanCard
+              key={plan.id}
+              hasUsageCharges={hasUsageCharges}
               plan={plan}
               currentPlan={currentPlan}
               onSubscribe={async (_plan) => {
