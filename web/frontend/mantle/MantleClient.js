@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 class MantleClient {
   constructor({ appId, customerApiToken, apiUrl = "https://api.heymantle.app/v1" }) {
     this.appId = appId;
@@ -31,6 +32,14 @@ class MantleClient {
       path: "/subscriptions",
       method: "POST",
       body: { planId, returnUrl },
+    });
+  }
+
+  async sendUsageEvent({ eventId = uuidv4(), eventType, value = 1, data = {} }) {
+    return await this.mantleRequest({
+      path: "/usage_events",
+      method: "POST",
+      body: { eventId, eventType, value, data },
     });
   }
 

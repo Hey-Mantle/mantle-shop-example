@@ -14,7 +14,7 @@ export const MainLayout = ({ children }) => {
   return (
     <MantleProvider
       apiUrl="https://api.heymantle.app/v1"
-      appId="394ea8ff-ed72-4841-8218-335c560be51c"
+      appId="beeecdf3-8e94-442c-b29c-0637511b7cc8"
       customerApiToken={shop.mantleApiToken}
     >
       {children}

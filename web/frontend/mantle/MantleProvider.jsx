@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Loading } from "@shopify/app-bridge-react";
 import MantleClient from "./MantleClient";
+import { v4 as uuidv4 } from "uuid";
 
 const MantleContext = createContext();
 
@@ -58,6 +59,11 @@ export const MantleProvider = ({
     cancelSubscription: async () => {
       const result = await mantleClient.cancelSubscription();
       console.log(`[MantleProvider] cancel subscription result: `, result);
+      return result;
+    },
+    sendUsageEvent: async ({ eventId = uuidv4(), eventType, value = 1, data = {} }) => {
+      const result = await mantleClient.sendUsageEvent({ eventId, eventType, value, data });
+      console.log(`[MantleProvider] send usage event result: `, result);
       return result;
     },
     hasFeature: ({ feature, count = 0 }) => {
