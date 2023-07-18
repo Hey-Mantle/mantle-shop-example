@@ -110,6 +110,7 @@ export const useMantle = () => {
     isLoading: context.isLoading,
     subscribe: context.subscribe,
     cancelSubscription: context.cancelSubscription,
+    sendUsageEvent: context.sendUsageEvent,
     hasFeature: context.hasFeature,
     featureLimit: context.featureLimit,
     requiredPlan: context.requiredPlan,

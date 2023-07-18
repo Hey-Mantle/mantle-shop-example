@@ -1,13 +1,10 @@
 import {
   Box,
-  Button,
   DropZone,
   HorizontalStack,
   Image,
-  IndexTable,
   Layout,
   Link,
-  Modal,
   Page,
   Select,
   Text,
@@ -20,16 +17,32 @@ import { useAppQuery } from "../../hooks";
 import { Loading, useNavigate } from "@shopify/app-bridge-react";
 import { useParams } from "react-router-dom";
 import { UpgradeBanner } from "../../mantle/UpgradeBanner";
+import { useEffect } from "react";
 
 export default function ProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { currentPlan, hasFeature } = useMantle();
+  const { currentPlan, hasFeature, sendUsageEvent } = useMantle();
 
   const { data, isLoading } = useAppQuery({
     url: `/api/products/${id}`,
   });
+
+  useEffect(() => {
+    if (data?.product) {
+      const performSendUsageEvent = async () => {
+        await sendUsageEvent({
+          eventType: "detail_view",
+          value: 1,
+          data: {
+            product_id: data.product.id,
+          }
+        });
+      };
+      performSendUsageEvent();
+    }
+  }, [data]);
 
   if (isLoading) {
     return <Loading />;
