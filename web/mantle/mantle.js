@@ -42,7 +42,7 @@ export default class Mantle {
   async identifyCustomer({ platform = "shopify", platformId, name, email, accessToken }) {
     console.log(`[Mantle] identifyCustomer: `, { platform, platformId, name, email, accessToken });
     const result = await this.mantleRequest({
-      path: "/customers/identify",
+      path: "/identify",
       method: "POST",
       body: {
         platform,
