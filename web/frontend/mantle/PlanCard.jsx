@@ -27,18 +27,15 @@ export const PlanCardHeader = ({ plan, hasUsageCharges, showTrialBadge = true })
         <Text variant="headingXl">
           {money({ amount: plan.amount, currency: plan.currencyCode })}
         </Text>
-        {plan.amount > 0 && (
-          <Text variant="bodySm">
-            /{intervalLabelShort(plan.interval)}
-          </Text>
-        )}
+        {plan.amount > 0 && <Text variant="bodySm">/{intervalLabelShort(plan.interval)}</Text>}
       </HorizontalStack>
     </VerticalStack>
     {hasUsageCharges &&
       (Object.keys(plan.usageCharges).length > 0 ? (
         <Text variant="bodySm" color="subdued">
+          +{" "}
           {Object.values(plan.usageCharges)
-            .map((charge) => charge.shortDescription)
+            .map((charge) => charge.terms)
             .join(", ")}
         </Text>
       ) : (
@@ -55,16 +52,19 @@ export const PlanCard = ({ plan, currentPlan, hasUsageCharges = false, onSubscri
 
   return (
     <Box padding="5" background="bg" borderRadius="2" shadow="sm">
-      <VerticalStack gap="4">
-        <PlanCardHeader plan={plan} hasUsageCharges={hasUsageCharges} />
-        <Divider />
-        <VerticalStack gap="1">
-          {Object.values(plan.features)
-            .sort(featureSort)
-            .map((feature) => (
-              <PlanFeatureListItem key={feature.id} feature={feature} />
-            ))}
+      <VerticalStack gap="4" align="space-between">
+        <VerticalStack gap="4">
+          <PlanCardHeader plan={plan} hasUsageCharges={hasUsageCharges} />
+          <Divider />
+          <VerticalStack gap="1">
+            {Object.values(plan.features)
+              .sort(featureSort)
+              .map((feature) => (
+                <PlanFeatureListItem key={feature.id} feature={feature} />
+              ))}
+          </VerticalStack>
         </VerticalStack>
+
         <Button
           primary
           loading={loading}
