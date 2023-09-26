@@ -8,7 +8,7 @@ const MantleContext = createContext();
 export const MantleProvider = ({
   appId,
   customerApiToken,
-  apiUrl = "https://api.heymantle.app/v1",
+  apiUrl = "https://appapi.heymantle.com/v1",
   embedded = true,
   children,
 }) => {
@@ -52,6 +52,7 @@ export const MantleProvider = ({
     plans,
     isLoading,
     subscribe: async ({ planId, returnUrl }) => {
+      console.log(`[MantleProvider] subscribe: `, { planId, returnUrl });
       const result = await mantleClient.subscribe({ planId, returnUrl });
       console.log(`[MantleProvider] subscribe result: `, result);
       return result;
@@ -61,8 +62,8 @@ export const MantleProvider = ({
       console.log(`[MantleProvider] cancel subscription result: `, result);
       return result;
     },
-    sendUsageEvent: async ({ eventId = uuidv4(), eventType, value = 1, data = {} }) => {
-      const result = await mantleClient.sendUsageEvent({ eventId, eventType, value, data });
+    sendUsageEvent: async ({ eventId = uuidv4(), eventName, properties }) => {
+      const result = await mantleClient.sendUsageEvent({ eventId, eventName, properties });
       console.log(`[MantleProvider] send usage event result: `, result);
       return result;
     },

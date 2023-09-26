@@ -1,5 +1,5 @@
 export default class Mantle {
-  constructor({ appId, appApiKey, apiUrl = "https://api.heymantle.app/v1" }) {
+  constructor({ appId, appApiKey, apiUrl = "https://appapi.heymantle.com/v1" }) {
     this.appId = appId;
     this.appApiKey = appApiKey;
     this.apiUrl = apiUrl;

@@ -33,11 +33,10 @@ export default function ProductPage() {
     if (data?.product) {
       const performSendUsageEvent = async () => {
         await sendUsageEvent({
-          eventType: "detail_view",
-          value: 1,
-          data: {
+          eventName: "detail_view",
+          properties: {
             product_id: data.product.id,
-          }
+          },
         });
       };
       performSendUsageEvent();
