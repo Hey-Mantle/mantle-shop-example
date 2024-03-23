@@ -1,5 +1,7 @@
 # Shopify App Template - Remix
 
+This is the default Shopify template for creating an app, with additional steps to integrate Mantle. See the Mantle guide at [https://heymantle.com/docs/guides/create-sample-shopify-app](https://heymantle.com/docs/guides/create-sample-shopify-app). The remaining of this README is the default template from Shopify.
+
 This is a template for building a [Shopify app](https://shopify.dev/docs/apps/getting-started) using the [Remix](https://remix.run) framework.
 
 Rather than cloning this repo, you can use your preferred package manager and the Shopify CLI with [these steps](https://shopify.dev/docs/apps/getting-started/create).
