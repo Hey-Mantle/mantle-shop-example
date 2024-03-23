@@ -1,6 +1,27 @@
 # Mantle Shopify App Example - Remix
 
-This is the default Shopify template for creating an app, with additional steps to integrate Mantle. See the Mantle guide at [https://heymantle.com/docs/guides/create-sample-shopify-app](https://heymantle.com/docs/guides/create-sample-shopify-app). The remainder of this README is the default template from Shopify.
+This is the default Shopify template for creating an app, with additional steps to integrate Mantle. See the Mantle guide at [https://heymantle.com/docs/guides/create-sample-shopify-app](https://heymantle.com/docs/guides/create-sample-shopify-app).
+
+## Troubleshooting common issues
+
+### Shopify CLI error
+
+For example, if you get the following error: `Couldn't find the configuration file for /Users/joshuagosse/Projects/mantle-shop-example, are you in an app directory?`, copy the contents of `shopify.app.toml.example` to `shopify.app.toml` and run `npm run dev -- --reset` or `yarn dev -- --reset` and reconnect to your app. If this doesn't work, try `npm run config:link` or `yarn config:link`.
+
+### Error: [MantleClient] One of apiKey or customerApiToken is required
+
+If you installed the app before configuring Mantle, you may see this error. To fix it, you can do one of the following:
+
+1. Uninstall the app and remove the session from the database. Once this is done, reinstall the app so Mantle `identify` is called during the OAuth flow, or
+2. Create and run a script to update the session in the database. You will need to call `identify` for each session with the the Mantle API key, Shopify access token, and shop domain.
+
+### Apps without public distribution cannot use the Shopify Billing API
+
+If you are trying to subscribe to a plan and it isn't working, you'll likely need to make your app public. You can do this by going to the app settings in the Shopify Partner Dashboard and changing your app's distribution settings to public.
+
+The remainder of this README is the default template from Shopify.
+
+## Shopify Remix Template
 
 This is a template for building a [Shopify app](https://shopify.dev/docs/apps/getting-started) using the [Remix](https://remix.run) framework.
 
