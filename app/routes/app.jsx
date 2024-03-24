@@ -5,7 +5,7 @@ import { AppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import "@shopify/polaris/build/esm/styles.css";
 import { authenticate } from "../shopify.server";
-import { MantleProvider } from "@heymantle/surface";
+import { MantleProvider, useMantle } from "@heymantle/surface";
 import prisma from "../db.server";
 
 export const loader = async ({ request }) => {
@@ -22,6 +22,26 @@ export const loader = async ({ request }) => {
   });
 };
 
+const Routes = () => {
+  const { loading } = useMantle();
+
+  // Show a custom loader if you require Mantle to be loaded before rendering the app.
+  if (loading) return null;
+
+  return (
+    <>
+      <NavMenu>
+        <Link to="/app" rel="home">
+          Home
+        </Link>
+        <Link to="/app/additional">Additional page</Link>
+        <Link to="/app/plans">Plans</Link>
+      </NavMenu>
+      <Outlet />
+    </>
+  );
+};
+
 export default function App() {
   const { apiKey, mantleAppId, mantleApiToken } = useLoaderData();
 
@@ -31,14 +51,7 @@ export default function App() {
         appId={mantleAppId}
         customerApiToken={mantleApiToken}
       >
-        <NavMenu>
-          <Link to="/app" rel="home">
-            Home
-          </Link>
-          <Link to="/app/additional">Additional page</Link>
-          <Link to="/app/plans">Plans</Link>
-        </NavMenu>
-        <Outlet />
+        <Routes />
       </MantleProvider>
     </AppProvider>
   );
