@@ -5,7 +5,7 @@ import { AppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import "@shopify/polaris/build/esm/styles.css";
 import { authenticate } from "../shopify.server";
-import { MantleProvider, useMantle } from "@heymantle/surface";
+import { MantleProvider, useMantle } from "@heymantle/react";
 import prisma from "../db.server";
 
 export const loader = async ({ request }) => {

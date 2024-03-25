@@ -1,6 +1,7 @@
 import { Layout, Page } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
-import { useMantle, PlanCardStack, PlanCardType } from "@heymantle/surface";
+import { PlanCardStack, PlanCardType } from "@heymantle/polaris";
+import { useMantle } from "@heymantle/react";
 
 export default function PlansPage() {
   const { customer, plans, mantleClient } = useMantle();

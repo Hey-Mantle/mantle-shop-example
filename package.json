@@ -20,7 +20,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@heymantle/surface": "^0.4.0",
+    "@heymantle/polaris": "^12",
     "@prisma/client": "^5.8.0",
     "@remix-run/dev": "^2.7.1",
     "@remix-run/node": "^2.7.1",
